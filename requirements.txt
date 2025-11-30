@@ -1,0 +1,11 @@
+transformers
+torch
+scikit-learn
+xgboost
+pandas
+numpy
+matplotlib
+jupyter
+tqdm
+datasets
+sentencepiece
