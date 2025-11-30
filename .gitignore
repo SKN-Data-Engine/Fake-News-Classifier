@@ -15,6 +15,38 @@ dist/
 downloads/
 eggs/
 .eggs/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.VolumeIcon.icns
+.apdisk
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Visual Studio / Visual Studio Code
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+ipch/
+*.ncb
+*.sdf
+[Bb]in/
+[Oo]bj/
+.vscode/
 lib/
 lib64/
 parts/
