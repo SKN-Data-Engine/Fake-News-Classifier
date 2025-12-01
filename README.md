@@ -1,68 +1,69 @@
-# Klasyfikator Fake News
+# Fake-News-Classifier
 
-Aplikacja webowa wykrywający fake news.
+Krótko: repozytorium zawiera webową aplikację (Streamlit) do klasyfikacji tekstów jako wiarygodne / fałszywe (fake news).
 
-## Instalacja
+## Najważniejsze cechy
+- Fine-tuned BERT (model do klasyfikacji tekstu)
+- Explainable AI: wizualizacje wpływu tokenów na decyzję modelu (przy użyciu transformers_interpret)
+- Prosty interfejs Streamlit do testowania i analizowania wyników
+
+## Wymagania
+- Python >= 3.10
+- Git i Git LFS
+
+## Quick start
+Poniżej kroki, które pozwolą uruchomić aplikację od zera na czystym systemie.
+
+Krok 1 - sklonuj repo (przykład):
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+# z katalogu w którym chcesz umieścić projekt
+git clone https://github.com/SKN-Data-Engine/Fake-News-Classifier.git
+cd Fake-News-Classifier
 ```
 
-## Zainstaluj pakiet i zależności:
+Krok 2 - pobierz model (Hugging Face)
 
 ```bash
-pip install .
-```
-
-## Pobierz model
-
-Repo modelu: `mgud29/Fake-News-BERT`.
-
-Proste kroki (uruchom w katalogu głównym projektu):
-
-1) Zainstaluj i włącz Git LFS (jeśli jeszcze nie):
-
-```bash
+# z katalogu projektu
+# 1) zainstaluj/configuruj git-lfs (jeśli nie masz)
 git lfs install
+
+# 2) sklonuj repo modelu bezpośrednio do katalogu `model`
+git clone https://huggingface.co/mgud29/Fake-News-BERT model
+
+# 3) pobierz rzeczywiste obiekty LFS (safetensors/pytorch_model.bin)
+cd model
+git lfs pull origin main
+cd ..
+
+# Weryfikacja:
+ls -la model
+file model/model.safetensors  # powinien byc bitowym plikiem a nie tekstowym
 ```
 
-2) Sklonuj repo modelu i skopiuj pliki do `model/`:
+Krok 3 - środowisko i zależności
 
 ```bash
-git clone https://huggingface.co/mgud29/Fake-News-BERT tmp_model_repo
-mkdir -p model
-cp -r tmp_model_repo/* model/
-rm -rf tmp_model_repo
+# utwórz virtualenv i aktywuj (macOS / Linux)
+python3.10 -m venv .venv
+source .venv/bin/activate
+
+# zainstaluj wymagane pakiety
+pip install -r requirements.txt
 ```
 
-3) Szybka weryfikacja - sprawdź, że w `model/` masz wymagane pliki:
-
-```bash
-ls -la model/
-# powinny być m.in.: config.json, model.safetensors (lub pytorch_model.bin), tokenizer_config.json, special_tokens_map.json, vocab.txt
-```
-
-To wszystko - skopiuj i wklej powyższe komendy, a model znajdzie się w `model/`
-
-
-Pobieranie datasetu (OPCJONALNIE)
-- Pobierz dataset zgodnie z instrukcją zawartą w `data/README.md`, (niepotrzebny do działania aplikacji)
-
-## Uruchomienie aplikacji (Streamlit)
+Krok 4 - uruchom aplikację
 
 ```bash
 streamlit run src/app.py
 ```
 
-W konsoli wyswietli się adres, na którym pracuje aplikacja. Zazwyczaj:
-```bash
-http://localhost:8501
-```
+Otwórz w przeglądarce adres wyświetlony przez Streamlit (zazwyczaj http://localhost:8501).
 
 
-
-
-## Uwaga o strukturze
-- `src/app.py` zakłada, że model znajduje się w `../model/` (ścieżka względna od `src`).
-- Notatniki w `notebooks/` oczekują datasetu w `../data/` (ścieżka względna od `notebooks`).
+## Struktura repo
+- `src/app.py` - aplikacja Streamlit (UI + ładowanie modelu)
+- `model/` - lokalne pliki modelu/tokenizera (nie śledź dużych wag w zwykłym commicie; używaj Git LFS)
+- `data/` - opcjonalne pliki danych / datasety
+- `notebooks/` - notatniki eksploracyjne i treningowe
