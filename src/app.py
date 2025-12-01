@@ -5,6 +5,7 @@ import time
 import torch.nn.functional as F
 from transformers import BertTokenizer, BertForSequenceClassification
 from transformers_interpret import SequenceClassificationExplainer
+from pathlib import Path
 
 # --- 1. KONFIGURACJA STRONY ---
 st.set_page_config(
@@ -43,12 +44,16 @@ LABELS = {0: "WIARYGODNY (REAL)", 1: "FAŁSZYWY (FAKE)"}
 
 @st.cache_resource
 def load_inference_engine():
-    model_path = "../model"
+    model_path = Path(__file__).resolve().parent.parent / "model"
+    model_path_str = str(model_path)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     try:
-        tokenizer = BertTokenizer.from_pretrained(model_path)
-        model = BertForSequenceClassification.from_pretrained(model_path)
+        if not model_path.exists():
+            raise FileNotFoundError(f"Model directory not found: {model_path_str}")
+
+        tokenizer = BertTokenizer.from_pretrained(model_path_str)
+        model = BertForSequenceClassification.from_pretrained(model_path_str)
         model.to(device)
         model.eval()
         
