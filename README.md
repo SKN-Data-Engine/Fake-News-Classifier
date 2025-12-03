@@ -1,6 +1,6 @@
 # Fake-News-Classifier
 
-Krótko: repozytorium zawiera webową aplikację (Streamlit) do klasyfikacji tekstów jako wiarygodne / fałszywe (fake news).
+Repozytorium zawiera webową aplikację (Streamlit) do klasyfikacji tekstów jako wiarygodne / fałszywe (fake news).
 
 ## Najważniejsze cechy
 - Fine-tuned BERT (model do klasyfikacji tekstu)
